@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title> Chatbot</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-md overflow-hidden flex flex-col" aria-label="chatbot">
+        <header class="px-4 py-3 bg-yellow-600 text-white font-bold">Simple Chatbot</header>
+
+        <div id="chatBody" class="flex-1 p-4 space-y-3 overflow-y-auto">
+            <div class="text-sm text-gray-500">Say hi to start the chat.</div>
+        </div>
+
+        <div id="chatForm" class="px-3 py-3 bg-gray-50 flex gap-2">
+            <input id="userInput" type="text"  placeholder="Type a message..." class="flex-1 px-3 py-2 rounded-md border border-gray-200">
+            <button type="button" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+
+    <script>
+    function botReply(message) {
+      message = message.toLowerCase();
+
+      if (message.includes("hello") || message.includes("hi")) {
+        return "Hello! How can I help you today?";
+      }
+      if (message.includes("how are you")) {
+        return "I'm just a bunch of code, but thanks for asking! How can I assist you today?";
+      }
+      if (message.includes("what is your name")) {
+        return "i'm ChatBot, your virtual assistant.";
+      }
+      if (message.includes("tell me a joke")) {
+        return "Why did the scarecrow win an award? Because he was outstanding in his field!";
+      }
+      if (message.includes("bye")) {
+        return "Goodbye! Have a great day!";
+      }
+      if (message.includes("help")) {
+        return "How can I assist you? You can ask me about my features.";
+      }
+      if (message.includes("tell me about b.voc")) {
+        return "B.Voc (Bachelor of Vocation) is a skill-based degree program aimed at providing students with practical knowledge and training in various vocational fields. What specific aspect would you like to know more about?";
+      }
+      
+      return "Sorry, I didn't understand that 😅";
+    }
+
+    function sendMessage() {
+      let input = document.getElementById("userInput");
+      let text = input.value.trim();
+      if (!text) return;
+
+      let chatBody = document.getElementById("chatBody");
+      chatBody.innerHTML += `<div class="message-user">${text}</div>`;
+      let reply = botReply(text);
+
+      setTimeout(() => {
+        chatBody.innerHTML += `<div class="message-bot">${reply}</div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 600);
+
+      input.value = "";
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    document.getElementById("userInput").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+ 
+    </script>
+</body>
+</html>
